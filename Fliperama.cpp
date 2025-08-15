@@ -4,8 +4,6 @@
 // =================================================================
 //                      DEFINIÇÕES GLOBAIS
 // =================================================================
-
-// --- Definições do Hardware ---
 LiquidCrystal_I2C lcd(0x27, 20, 4); // Configurado para LCD 20x4
 
 const int PINO_BOTAO_ESQUERDA = 2;
@@ -13,13 +11,13 @@ const int PINO_BOTAO_DIREITA = 4;
 const int PINO_BOTAO_CONFIRMA = 3;
 const int PINO_BUZZER = 8;
 
-// --- Definições de Comandos ---
+// Comandos
 #define COMANDO_NENHUM   0
 #define COMANDO_ESQUERDA 1
 #define COMANDO_DIREITA  2
 #define COMANDO_CONFIRMA 3
 
-// --- Definições de Notas Musicais ---
+// Definições de Notas Musicais
 #define NOTE_D4 294
 #define NOTE_C4 262
 #define NOTE_B3 247
@@ -30,7 +28,7 @@ const int PINO_BUZZER = 8;
 #define NOTE_C5 523
 #define REST    0
 
-// --- Estados e Menu do Jogo ---
+// Estados e Menu do Jogo
 enum EstadoDoJogo { MENU, BLACKJACK, SLOTS, ROLETA, FORCA, DINO };
 EstadoDoJogo estadoAtual = MENU;
 
@@ -39,14 +37,14 @@ const char* nomesDosJogos[] = {"Blackjack", "Slots", "Roleta", "Forca", "Dino Ga
 int jogoSelecionado = 0;
 bool precisaRedesenharMenu = true;
 
-// --- Protótipos das Funções ---
+// Funções
 void jogarBlackjack();
 void jogarSlots();
 void jogarRoleta();
 void jogarForca();
 void jogarDino();
 int lerAcaoDoBotao();
-int lerAcaoDoBotaoRapido(); // Adicionado protótipo
+int lerAcaoDoBotaoRapido();
 
 // =================================================================
 //                          FUNÇÃO SETUP
@@ -59,7 +57,7 @@ void setup() {
   pinMode(PINO_BOTAO_CONFIRMA, INPUT_PULLUP);
   pinMode(PINO_BUZZER, OUTPUT);
   randomSeed(analogRead(A0));
-  lcd.setCursor(5, 1); // Já centralizado
+  lcd.setCursor(5, 1);
   lcd.print("Fliperama");
   delay(1500);
 }
@@ -72,9 +70,9 @@ void exibirMenuPrincipal() {
   lcd.clear();
   String jogoStr = "> " + String(nomesDosJogos[jogoSelecionado]) + " <";
   int pad = (20 - jogoStr.length()) / 2;
-  lcd.setCursor(pad, 1); // Já centralizado na linha do meio
+  lcd.setCursor(pad, 1);
   lcd.print(jogoStr);
-  lcd.setCursor(2, 2);   // Já centralizado na linha do meio
+  lcd.setCursor(2, 2);   
   lcd.print("Selecione o jogo");
 }
 
