@@ -119,6 +119,17 @@ const int PINO_BUZZER = 8;
 #define NOTE_C5 523
 #define REST    0
 
+byte barra[8] = {
+  B00000,
+  B10000,
+  B01000,
+  B00100,
+  B00010,
+  B00001,
+  B00000,
+  B00000
+};
+
 // =================================================================
 //                      MUSICA DE FUNDO (VERSÃO COMPLETA)
 // =================================================================
@@ -219,6 +230,7 @@ int lerAcaoDoBotaoRapido();
 void setup() {
     lcd.init();
     lcd.backlight();
+    lcd.createChar(0,barra);
     pinMode(PINO_BOTAO_ESQUERDA, INPUT_PULLUP);
     pinMode(PINO_BOTAO_DIREITA, INPUT_PULLUP);
     pinMode(PINO_BOTAO_CONFIRMA, INPUT_PULLUP);
@@ -762,8 +774,8 @@ void jogarRoleta() {
 // =================================================================
 //                        JOGO 4: FORCA
 // =================================================================
-const char* palavras[] = {"ARDUINO", "FLIPER", "CODIGO", "JOGADOR", "BOTAO", "DISPLAY"};
-const int NUM_PALAVRAS = 6;
+const char* palavras[] = {"ARDUINO", "CODIGO", "JOGADOR", "BOTAO", "DISPLAY", "MOUSE", "LIVRO", "TELA", "CELULAR", "MAQUINA"};
+const int NUM_PALAVRAS = 10;
 String palavraSecreta;
 String palavraOculta;
 int chances;
@@ -771,18 +783,18 @@ String letrasUsadas;
 String letrasErradas;
 
 void desenharForca(int erros) {
-    if (erros == 0) {
-        lcd.setCursor(0, 0); lcd.print(" ____ ");
-        lcd.setCursor(0, 1); lcd.print("|/   ");
-        lcd.setCursor(0, 2); lcd.print("|    ");
-        lcd.setCursor(0, 3); lcd.print("|___ ");
+    if (erros >= 0){
+        lcd.setCursor(0, 0); lcd.print(" ___");
+        lcd.setCursor(0, 1); lcd.print(" /");
+        lcd.setCursor(0, 2); lcd.print(" |");
+        lcd.setCursor(0, 3); lcd.print(" |");
     }
-    if (erros >= 1) { lcd.setCursor(4, 1); lcd.print("|"); }
-    if (erros >= 2) { lcd.setCursor(4, 2); lcd.print("O"); }
+    if (erros >= 1) { lcd.setCursor(4, 1); lcd.print("O"); }
+    if (erros >= 2) { lcd.setCursor(4, 2); lcd.print("|"); }
     if (erros >= 3) { lcd.setCursor(3, 2); lcd.print("/"); }
-    if (erros >= 4) { lcd.setCursor(5, 2); lcd.print("\\"); }
+    if (erros >= 4) { lcd.setCursor(5, 2); lcd.write((byte)0); }
     if (erros >= 5) { lcd.setCursor(3, 3); lcd.print("/"); }
-    if (erros >= 6) { lcd.setCursor(5, 3); lcd.print("\\"); }
+    if (erros >= 6) { lcd.setCursor(5, 3); lcd.write((byte)0); }
 }
 
 void exibirPainelForca() {
